@@ -1,10 +1,10 @@
 Category.create!(
   [
       {
-      name: "Sports",
+      name: 'Sports',
     },
     {
-      name: "Study",
+      name: 'Study',
     }
   ]
 )
@@ -13,11 +13,11 @@ Idea.create!(
   [
     {
       category_id: 1,
-      body: "badminton",
+      body: 'badminton',
     },
     {
       category_id: 2,
-      body: "Learn Ruby",
+      body: 'Learn Ruby',
     }
   ]
 )
