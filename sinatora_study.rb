@@ -9,18 +9,19 @@ set :database_file, "./config/database.yml"
 
 get '/' do
   # ideasを全件取得、1レコードずつハッシュ化し配列に格納
-  ideas = []
-  for i in 1..Idea.all.size do
-    idea = Idea.find(i)
-    parent_category = Category.find(idea.category_id)
-    idea_hash = {}
-    idea_hash["id"] = idea.id
-    idea_hash["category"] = parent_category.name
-    idea_hash["body"] = idea.body
-    ideas.push(idea_hash)
-  end
-  data = { "data": ideas }
-  return data.to_json
+  # ideas = []
+  # for i in 1..Idea.all.size do
+  #   idea = Idea.find(i)
+  #   parent_category = Category.find(idea.category_id)
+  #   idea_hash = {}
+  #   idea_hash["id"] = idea.id
+  #   idea_hash["category"] = parent_category.name
+  #   idea_hash["body"] = idea.body
+  #   ideas.push(idea_hash)
+  # end
+  # data = { "data": ideas }
+  # return data.to_json
+  "Hello World"
 end
 
 # アイデア登録API

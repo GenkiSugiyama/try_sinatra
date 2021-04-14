@@ -12,6 +12,7 @@ gem 'sqlite3'
 gem 'rubocop', require: false
 
 group :test do
+  # このプロジェクトのGemfileに記述してbundle installしたrspecはbundle execで動かす。
   gem 'rspec'
   gem 'rack-test'
 end
