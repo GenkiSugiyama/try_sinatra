@@ -33,20 +33,26 @@ get '/:category_name/:body' do
 
   category = Category.find_by(name: params[:category_name])
   puts category.class
-  if category.check_exist
-    idea = Idea.new(category_id: category.id, body: params[:body])
-    if idea.save
-      { result: 'success', code: 201 }.to_json
+  # 未登録のカテゴリならカテゴリを新規登録するした後アイデアを登録する
+  if category.nil?
+    new_category = Category.new(name: params[:category_name])
+    if new_category.save
+      idea = Idea.new(category_id: new_category.id, body: params[:body])
     else
+      status 201
       { result: 'failure' }.to_json
     end
   else
-    new_category = Category.new(name: params[:category_name])
-    if new_category.save
-      { result: 'success', code: 201 }.to_json
-    else
-      { result: 'failure' }.to_json
-    end
+    # 登録済みのカテゴリならそのままアイデアのみを登録する
+    idea = Idea.new(category_id: category.id, body: params[:body])
+  end
+
+  if idea.save
+    status 201
+    { result: 'success', code: 201 }.to_json
+  else
+    status 422
+    { result: 'failure' }.to_json
   end
 end
 
@@ -56,9 +62,9 @@ get '/:category_name' do
     params_category = Category.find_by(name: params[:category_name])
     # カテゴリが存在していなければ404
     if params_category.nil?
+      status 404
       not_found
     end
-
     # 親カテゴリ名でideaを検索し1レコードずつハッシュ化
     searched_ideas = Idea.where(category_id: params_category.id)
     ideas = []
